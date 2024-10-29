@@ -6,3 +6,10 @@ body {
   background-color: #000;          /* Opcional: color de fondo si sobra espacio alrededor de la imagen */
   min-height: 100vh;               /* Asegura que el fondo cubra la altura total de la pantalla */
 }
+
+.central-image {
+  max-width: 100%;       /* Ajusta el tamaño de la imagen para que no sobrepase el ancho */
+  max-height: 100%;      /* Ajusta la altura máxima de la imagen */
+  display: block;        /* Hace que la imagen se muestre centrada */
+  margin: auto;          /* Centra la imagen */
+}
