@@ -34,3 +34,46 @@ body {
     margin: 55px auto;            /* Centra horizontalmente */
   }
 }
+
+.custom-input {
+  width: 300px;
+  height: 60px;
+  font-size: 24px;
+  background-color: #f5d742;  /* Amarillo opaco */
+  color: black;
+  text-align: center;
+  font-weight: bold;
+  font-family: "Gothic A1", sans-serif; /* Fuente gótica */
+  border: 2px solid #ccc;
+  border-radius: 8px;
+}
+
+.submit-button {
+  width: 200px;
+  height: 60px;
+  background-color: #4CAF50;  /* Verde */
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.reset-button {
+  width: 200px;
+  height: 60px;
+  background-color: black;
+  color: red;
+  font-weight: bold;
+  font-size: 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.message {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
