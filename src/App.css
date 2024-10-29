@@ -19,38 +19,6 @@ body {
   display: block;
 }
 
-@media (max-width: 768px) { /* Ajustes para tablets y móviles */
-  .central-image {
-    width: 100%;                 /* Aumenta el tamaño en dispositivos pequeños */
-    max-width: 400px;           /* Tamaño máximo en pantallas pequeñas */
-    margin: 55px auto;            /* Centra horizontalmente */
-  }
-
-  .digit-container {
-    display: none;
-  }
-
-  .digit-button {
-    display: none;
-  }
-}
-
-@media (max-width: 480px) { /* Ajustes adicionales para móviles pequeños */
-  .central-image {
-    width: 100%;                 /* Tamaño más grande en pantallas muy pequeñas */
-    max-width: 400px;           /* Tamaño máximo para móviles pequeños */
-    margin: 55px auto;            /* Centra horizontalmente */
-  }
-
-  .digit-container {
-    display: none;
-  }
-
-  .digit-button {
-    display: none;
-  }
-}
-
 .custom-input {
   width: 300px;
   height: 60px;
@@ -77,6 +45,9 @@ body {
 }
 
 .reset-button {
+  position: absolute;
+  top: 10px;          /* Ajusta la distancia desde el borde superior */
+  left: 10px;         /* Ajusta la distancia desde el borde izquierdo */
   width: 200px;
   height: 60px;
   background-color: black;
@@ -123,4 +94,49 @@ body {
   background-color: rgba(0, 255, 0, 0.4); /* Efecto hover para mejor visibilidad rgba(0, 255, 0, 0.4); o transparent*/
 }
 
+
+@media (max-width: 768px) { /* Ajustes para tablets y móviles */
+  .central-image {
+    width: 100%;                 /* Aumenta el tamaño en dispositivos pequeños */
+    max-width: 400px;           /* Tamaño máximo en pantallas pequeñas */
+    margin: 55px auto;            /* Centra horizontalmente */
+  }
+
+  .digit-container {
+    display: none;
+  }
+
+  .digit-button {
+    display: none;
+  }
+
+  .reset-button {
+    width: 100px;     /* Reduce el ancho en pantallas pequeñas */
+    height: 30px;     /* Reduce la altura en pantallas pequeñas */
+    font-size: 10px;  /* Reduce el tamaño de la fuente en pantallas pequeñas */
+  }
+
+}
+
+@media (max-width: 480px) { /* Ajustes adicionales para móviles pequeños */
+  .central-image {
+    width: 100%;                 /* Tamaño más grande en pantallas muy pequeñas */
+    max-width: 400px;           /* Tamaño máximo para móviles pequeños */
+    margin: 55px auto;            /* Centra horizontalmente */
+  }
+
+  .digit-container {
+    display: none;
+  }
+
+  .digit-button {
+    display: none;
+  }
+
+  .reset-button {
+    width: 100px;     /* Reduce el ancho en pantallas pequeñas */
+    height: 30px;     /* Reduce la altura en pantallas pequeñas */
+    font-size: 10px;  /* Reduce el tamaño de la fuente en pantallas pequeñas */
+  }
+}
 
