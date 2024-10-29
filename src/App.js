@@ -21,7 +21,7 @@ function App() {
     if (inputValue === '1234') {
       setMessage('Bien');
     } else {
-      setMessage('Mal');
+      setMessage('Código incorrecto');
     }
   };
 
