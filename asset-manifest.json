@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/act-pela/static/css/main.a8e15d97.css",
-    "main.js": "/act-pela/static/js/main.4774ab32.js",
+    "main.js": "/act-pela/static/js/main.79d47a30.js",
     "static/js/453.bd1b257f.chunk.js": "/act-pela/static/js/453.bd1b257f.chunk.js",
     "static/media/fondo2.webp": "/act-pela/static/media/fondo2.f6c565d6fc397a45076b.webp",
     "index.html": "/act-pela/index.html",
     "main.a8e15d97.css.map": "/act-pela/static/css/main.a8e15d97.css.map",
-    "main.4774ab32.js.map": "/act-pela/static/js/main.4774ab32.js.map",
+    "main.79d47a30.js.map": "/act-pela/static/js/main.79d47a30.js.map",
     "453.bd1b257f.chunk.js.map": "/act-pela/static/js/453.bd1b257f.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.a8e15d97.css",
-    "static/js/main.4774ab32.js"
+    "static/js/main.79d47a30.js"
   ]
 }
