@@ -25,6 +25,14 @@ body {
     max-width: 400px;           /* Tamaño máximo en pantallas pequeñas */
     margin: 55px auto;            /* Centra horizontalmente */
   }
+
+  .digit-container {
+    display: none;
+  }
+
+  .digit-button {
+    display: none;
+  }
 }
 
 @media (max-width: 480px) { /* Ajustes adicionales para móviles pequeños */
@@ -32,6 +40,14 @@ body {
     width: 100%;                 /* Tamaño más grande en pantallas muy pequeñas */
     max-width: 400px;           /* Tamaño máximo para móviles pequeños */
     margin: 55px auto;            /* Centra horizontalmente */
+  }
+
+  .digit-container {
+    display: none;
+  }
+
+  .digit-button {
+    display: none;
   }
 }
 
@@ -77,3 +93,34 @@ body {
   font-weight: bold;
   color: #333;
 }
+
+.digit-container {
+  position: absolute;
+  top: 55.5%; /* Ajusta según la posición deseada en la imagen */
+  left: 44%;
+  width: 14%; /* Tamaño adecuado para cubrir los botones */
+  height: 30%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px;
+  pointer-events: none; /* Ignora clics en el contenedor */
+}
+
+.digit-button {
+  width: 50px; /* Ajusta el tamaño de cada botón */
+  height: 50px;
+  background-color: rgba(0, 255, 0, 0.2); /* Temporario para ver los botones rgba(0, 255, 0, 0.2) o transparent*/
+  border: 1px solid #4CAF50; /* 1px solid #4CAF50; o none */
+  color: black; /* black o none*/
+  font-weight: bold;
+  font-size: 20px;
+  cursor: pointer;
+  pointer-events: auto; /* Habilita clics en los botones individuales */
+}
+
+.digit-button:hover {
+  background-color: rgba(0, 255, 0, 0.4); /* Efecto hover para mejor visibilidad rgba(0, 255, 0, 0.4); o transparent*/
+}
+
+
