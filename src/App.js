@@ -45,7 +45,7 @@ function App() {
 
   return (
     <div className="App">
-      <img src={`${process.env.PUBLIC_URL}/fondo6.png`} alt="Imagen central" className="central-image" />
+      <img src={`${process.env.PUBLIC_URL}/cofre.png`} alt="Imagen central" className="central-image" />
       <Input value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
       <Button onClick={handleSubmit}>Enviar</Button>
       <ResetButton onClick={handleReset}>Reiniciar</ResetButton>

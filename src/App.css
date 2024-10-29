@@ -8,7 +8,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;      /* Alinea el contenido al inicio de la parte superior */
-  padding-top: 60px;           /* Añade espacio en la parte superior para bajar el cofre */
+  padding-top: 10px;           /* Añade espacio en la parte superior para bajar el cofre */
   box-sizing: border-box;
 }
 
@@ -21,27 +21,27 @@ body {
 
 .custom-input {
   position: absolute;
-  top: 35%;
+  top: 25%;
   left: 40%;
   width: 300px;
   height: 60px;
-  font-size: 24px;
-  background-color: #f5d742;  /* Amarillo opaco */
-  color: black;
+  font-size: 35px;
+  background-color: #000000;  /* Amarillo opaco */
+  color: rgb(255, 0, 0);
   text-align: center;
   font-weight: bold;
-  font-family: "Gothic A1", sans-serif; /* Fuente gótica */
-  border: 2px solid #ccc;
+  font-family: 'Franklin Gothic Medium'; /* Fuente gótica */
+  border: 2px solid #a82727;
   border-radius: 8px;
 }
 
 .submit-button {
   position: absolute;
-  top: 87%;
-  left: 44.5%;
+  top: 83%;
+  left: 43%;
   width: 200px;
   height: 60px;
-  background-color: #4CAF50;  /* Verde */
+  background-color: black;  /* Verde */
   color: white;
   font-weight: bold;
   font-size: 20px;
@@ -60,6 +60,7 @@ body {
   color: red;
   font-weight: bold;
   font-size: 20px;
+  font-family: 'Franklin Gothic Medium';
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -73,31 +74,37 @@ body {
 
 .digit-container {
   position: absolute;
-  top: 50.5%; /* Ajusta según la posición deseada en la imagen */
-  left: 44.1%;
-  width: 14%; /* Tamaño adecuado para cubrir los botones */
-  height: 30%;
+  top: 40%;           /* Ajusta la posición vertical */
+  left: 43%;          /* Ajusta la posición horizontal */
+  width: 15%;           /* Tamaño adecuado para el contenedor */
+  height: 40%;          /* Altura adecuada para el contenedor */
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 18px;
-  pointer-events: none; /* Ignora clics en el contenedor */
+  justify-content: center; /* Centra horizontalmente los botones */
+  align-items: center;     /* Centra verticalmente los botones */
+  gap: 10px;               /* Ajusta el espacio entre los botones */
+  pointer-events: none;    /* Ignora clics en el contenedor */
 }
 
 .digit-button {
-  width: 50px; /* Ajusta el tamaño de cada botón */
-  height: 50px;
-  background-color: rgba(0, 255, 0, 0.2); /* Temporario para ver los botones rgba(0, 255, 0, 0.2) o transparent*/
-  border: 1px solid #4CAF50; /* 1px solid #4CAF50; o none */
-  color: black; /* black o none*/
+  flex: 1 1 30%;           /* Asegura que cada botón ocupe el 30% del ancho del contenedor y se ajuste automáticamente */
+  max-width: 50px;         /* Tamaño máximo de los botones */
+  max-height: 50px;        /* Tamaño máximo de los botones */
+  background-color: rgba(0, 0, 0, 0.9); /* Temporario para ver los botones */
+  border: 1px solid #ff0000; /* Borde para ver los botones */
+  color: white;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 30px;
   cursor: pointer;
-  pointer-events: auto; /* Habilita clics en los botones individuales */
+  pointer-events: auto;    /* Habilita clics en los botones individuales */
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centra el texto dentro del botón */
 }
 
+
 .digit-button:hover {
-  background-color: rgba(0, 255, 0, 0.4); /* Efecto hover para mejor visibilidad rgba(0, 255, 0, 0.4); o transparent*/
+  background-color: rgba(173, 174, 173, 0.4); /* Efecto hover para mejor visibilidad rgba(0, 255, 0, 0.4); o transparent*/
 }
 
 
@@ -106,14 +113,19 @@ body {
     width: 100%;                 /* Aumenta el tamaño en dispositivos pequeños */
     max-width: 400px;           /* Tamaño máximo en pantallas pequeñas */
     margin: 55px auto;            /* Centra horizontalmente */
+    top: 40%;
   }
 
   .digit-container {
-    display: none;
+    top: 20%;           /* Ajusta la posición vertical */
+    left: 50%;          /* Ajusta la posición horizontal */
+    width: 60%;
+    height: 50%;
   }
 
   .digit-button {
-    display: none;
+    width: auto;
+    height: auto;
   }
 
   .reset-button {
@@ -123,7 +135,7 @@ body {
   }
 
   .submit-button {
-    top: 65%;          /* Ajusta la posición en pantallas pequeñas */
+    top: 60%;          /* Ajusta la posición en pantallas pequeñas */
     left: 30%;         /* Centra horizontalmente */
   }
 
@@ -132,6 +144,7 @@ body {
     left: 27%;         /* Centra horizontalmente */  
     width: 200px;
     height: 60px;
+    font-size: 25px;
   }
 
 }
@@ -141,14 +154,19 @@ body {
     width: 100%;                 /* Tamaño más grande en pantallas muy pequeñas */
     max-width: 400px;           /* Tamaño máximo para móviles pequeños */
     margin: 55px auto;            /* Centra horizontalmente */
+    top: 70%;
   }
 
   .digit-container {
-    display: none;
+    top: 30%;           /* Ajusta la posición vertical */
+    left: 24%;          /* Ajusta la posición horizontal */
+    width: 55%;
+    height: 40%;
   }
 
   .digit-button {
-    display: none;
+    width: auto;
+    height: auto;
   }
 
   .reset-button {
@@ -158,8 +176,16 @@ body {
   }
 
   .submit-button {
-    top: 65%;          /* Ajusta la posición en pantallas pequeñas */
-    left: 30%;         /* Centra horizontalmente */
+    top: 70%;          /* Ajusta la posición en pantallas pequeñas */
+    left: 25%;         /* Centra horizontalmente */
+  }
+
+  .custom-input {
+    top: 20%;          /* Ajusta la posición en pantallas pequeñas */
+    left: 24%;         /* Centra horizontalmente */  
+    width: 200px;
+    height: 60px;
+    font-size: 25px;
   }
 }
 
