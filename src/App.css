@@ -111,6 +111,26 @@ body {
   background-color: rgba(173, 174, 173, 0.4); /* Efecto hover para mejor visibilidad rgba(0, 255, 0, 0.4); o transparent*/
 }
 
+.success-container {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.success-image {
+  width: 100%;
+  max-width: 400px;
+  margin-top: 20px;
+}
+
+.success-message {
+  font-size: 50px;
+  font-weight: bold;
+  color: #ff0000;
+  margin-top: 20px;
+  background-color: #000000;
+}
+
+
 
 @media (max-width: 768px) { /* Ajustes para tablets y móviles */
   .central-image {
