@@ -170,6 +170,12 @@ body {
     font-size: 25px;
   }
 
+  .message {
+    top: 3%;          /* Ajusta la distancia desde el borde superior */
+    left: 37%;          /* Centra horizontalmente */
+    font-size: 35px;
+  }
+
 }
 
 @media (max-width: 480px) { /* Ajustes adicionales para móviles pequeños */
@@ -209,6 +215,12 @@ body {
     width: 200px;
     height: 60px;
     font-size: 25px;
+  }
+
+  .message {
+    top: 3%;          /* Ajusta la distancia desde el borde superior */
+    left: 37%;          /* Centra horizontalmente */
+    font-size: 35px;
   }
 }
 
