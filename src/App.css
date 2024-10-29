@@ -8,7 +8,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;      /* Alinea el contenido al inicio de la parte superior */
-  padding-top: 10px;           /* Añade espacio en la parte superior para bajar el cofre */
   box-sizing: border-box;
 }
 
