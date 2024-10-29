@@ -8,7 +8,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;      /* Alinea el contenido al inicio de la parte superior */
-  padding-top: 100px;           /* Añade espacio en la parte superior para bajar el cofre */
+  padding-top: 60px;           /* Añade espacio en la parte superior para bajar el cofre */
   box-sizing: border-box;
 }
 
@@ -20,6 +20,9 @@ body {
 }
 
 .custom-input {
+  position: absolute;
+  top: 35%;
+  left: 40%;
   width: 300px;
   height: 60px;
   font-size: 24px;
@@ -33,6 +36,9 @@ body {
 }
 
 .submit-button {
+  position: absolute;
+  top: 87%;
+  left: 44.5%;
   width: 200px;
   height: 60px;
   background-color: #4CAF50;  /* Verde */
@@ -67,8 +73,8 @@ body {
 
 .digit-container {
   position: absolute;
-  top: 55.5%; /* Ajusta según la posición deseada en la imagen */
-  left: 44%;
+  top: 50.5%; /* Ajusta según la posición deseada en la imagen */
+  left: 44.1%;
   width: 14%; /* Tamaño adecuado para cubrir los botones */
   height: 30%;
   display: flex;
@@ -116,6 +122,18 @@ body {
     font-size: 10px;  /* Reduce el tamaño de la fuente en pantallas pequeñas */
   }
 
+  .submit-button {
+    top: 65%;          /* Ajusta la posición en pantallas pequeñas */
+    left: 30%;         /* Centra horizontalmente */
+  }
+
+  .custom-input {
+    top: 20%;          /* Ajusta la posición en pantallas pequeñas */
+    left: 27%;         /* Centra horizontalmente */  
+    width: 200px;
+    height: 60px;
+  }
+
 }
 
 @media (max-width: 480px) { /* Ajustes adicionales para móviles pequeños */
@@ -137,6 +155,11 @@ body {
     width: 100px;     /* Reduce el ancho en pantallas pequeñas */
     height: 30px;     /* Reduce la altura en pantallas pequeñas */
     font-size: 10px;  /* Reduce el tamaño de la fuente en pantallas pequeñas */
+  }
+
+  .submit-button {
+    top: 65%;          /* Ajusta la posición en pantallas pequeñas */
+    left: 30%;         /* Centra horizontalmente */
   }
 }
 
