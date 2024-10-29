@@ -3,13 +3,34 @@ body {
   background-size: cover;       /* Ajusta la imagen para cubrir toda la pantalla */
   background-position: center;  /* Centra la imagen */
   background-repeat: no-repeat; /* Evita que la imagen se repita */
-  background-color: #000;          /* Opcional: color de fondo si sobra espacio alrededor de la imagen */
-  min-height: 100vh;               /* Asegura que el fondo cubra la altura total de la pantalla */
+  background-color: #000;       /* Color de fondo si sobra espacio */
+  min-height: 100vh;            /* Asegura que el fondo cubra la altura total */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;      /* Alinea el contenido al inicio de la parte superior */
+  padding-top: 100px;           /* Añade espacio en la parte superior para bajar el cofre */
+  box-sizing: border-box;
 }
 
 .central-image {
-  max-width: 100%;       /* Ajusta el tamaño de la imagen para que no sobrepase el ancho */
-  max-height: 100%;      /* Ajusta la altura máxima de la imagen */
-  display: block;        /* Hace que la imagen se muestre centrada */
-  margin: auto;          /* Centra la imagen */
+  width: 100%;                   /* Ajusta el tamaño inicial de la imagen */
+  max-width: 800px;             /* Tamaño máximo en pantallas grandes */
+  margin: 15px auto;            /* Centra horizontalmente */
+  display: block;
+}
+
+@media (max-width: 768px) { /* Ajustes para tablets y móviles */
+  .central-image {
+    width: 100%;                 /* Aumenta el tamaño en dispositivos pequeños */
+    max-width: 400px;           /* Tamaño máximo en pantallas pequeñas */
+    margin: 55px auto;            /* Centra horizontalmente */
+  }
+}
+
+@media (max-width: 480px) { /* Ajustes adicionales para móviles pequeños */
+  .central-image {
+    width: 100%;                 /* Tamaño más grande en pantallas muy pequeñas */
+    max-width: 400px;           /* Tamaño máximo para móviles pequeños */
+    margin: 55px auto;            /* Centra horizontalmente */
+  }
 }
