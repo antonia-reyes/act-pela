@@ -17,7 +17,7 @@ function App() {
   };
 
   const handleSubmit = () => {
-    if (inputValue === '1234') {
+    if (inputValue === '3251') {
       setMessage('Bien');
       setIsCodeCorrect(true); // Ocultar el contenido principal y mostrar el mensaje
     } else {
