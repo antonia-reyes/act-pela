@@ -165,8 +165,10 @@ h1 {
 
 .back-button {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-260px);
+  z-index: 20;
   border: 0;
   padding: 10px 14px;
   border-radius: 12px;
@@ -391,6 +393,16 @@ h1 {
   padding-right: 24px;
 }
 
+
+@media (min-width: 601px) and (max-width: 900px) {
+  .back-button {
+    top: 12px;
+    left: 50%;
+    transform: translateX(-250px);
+    z-index: 20;
+  }
+}
+
 @media (max-width: 600px) {
   .page-shell {
     align-items: flex-start;
@@ -425,8 +437,10 @@ h1 {
   }
 
   .back-button {
-    top: 6px;
-    left: 6px;
+    top: 12px;
+    left: 12px;
+    transform: none;
+    z-index: 20;
   }
 
   .door-stage {
