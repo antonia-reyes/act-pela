@@ -1,29 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 
-const TREASURES = {
-  1: {
-    title: 'Tesoro 1',
-    code: '325100',
-  },
-  2: {
-    title: 'Tesoro 2',
-    code: '123456',
-  },
-  3: {
-    title: 'Tesoro 3',
-    code: '567890',
-  },
-  4: {
-    title: 'Tesoro 4',
-    code: '901234',
-  },
+const ROOMS = {
+  1: { title: '6°B', code: '2028' },
+  2: { title: '6°A', code: '362825' },
+  3: { title: '8°A', code: '1484729' },
+  4: { title: '8°B', code: '1234' },
 };
 
 const digits = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
 
-function getTreasureIdFromHash() {
-  const match = window.location.hash.match(/^#\/treasure\/([1-4])$/);
+function getRoomIdFromHash() {
+  const match = window.location.hash.match(/^#\/room\/([1-4])$/);
   return match ? Number(match[1]) : null;
 }
 
@@ -35,22 +23,22 @@ function HomePage() {
   return (
     <main className="page-shell home-page">
       <section className="panel selection-panel">
-        <div className="eyebrow">Actividad</div>
-        <h1>Elige un tesoro</h1>
+        <div className="eyebrow">Laboratorio abandonado</div>
+        <h1>Elige tu habitación</h1>
         <p className="intro">
-          Selecciona una opción para abrir el desafío correspondiente.
+          Selecciona tu curso para abrir la puerta correspondiente.
         </p>
 
-        <div className="treasure-options">
-          {Object.entries(TREASURES).map(([id, treasure]) => (
+        <div className="room-options">
+          {Object.entries(ROOMS).map(([id, room]) => (
             <button
               key={id}
-              className="treasure-option"
+              className="room-option"
               type="button"
-              onClick={() => goTo(`/treasure/${id}`)}
+              onClick={() => goTo(`/room/${id}`)}
             >
-              <span className="treasure-number">{id}</span>
-              <span>{treasure.title}</span>
+              <span className="room-number">{id}</span>
+              <span>{room.title}</span>
             </button>
           ))}
         </div>
@@ -59,9 +47,9 @@ function HomePage() {
   );
 }
 
-function Keypad({ value, onChange }) {
+function Keypad({ value, onChange, maxLength }) {
   const addDigit = (digit) => {
-    if (value.length < 6) {
+    if (value.length < maxLength) {
       onChange(`${value}${digit}`);
     }
   };
@@ -83,41 +71,27 @@ function Keypad({ value, onChange }) {
   );
 }
 
-function TreasurePage({ treasureId }) {
-  const treasure = TREASURES[treasureId];
+function RoomPage({ roomId }) {
+  const room = ROOMS[roomId];
   const [inputValue, setInputValue] = useState('');
   const [message, setMessage] = useState('');
   const [isCodeCorrect, setIsCodeCorrect] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const transitionTimer = useRef(null);
 
   useEffect(() => {
     setInputValue('');
     setMessage('');
     setIsCodeCorrect(false);
-    setIsTransitioning(false);
-
-    return () => {
-      if (transitionTimer.current) {
-        clearTimeout(transitionTimer.current);
-      }
-    };
-  }, [treasureId]);
+  }, [roomId]);
 
   const showSuccess = () => {
     setMessage('');
-    setIsTransitioning(true);
-
-    transitionTimer.current = setTimeout(() => {
-      setIsCodeCorrect(true);
-      setIsTransitioning(false);
-    }, 260);
+    setIsCodeCorrect(true);
   };
 
   const handleSubmit = () => {
-    if (!treasure || isCodeCorrect || isTransitioning) return;
+    if (!room || isCodeCorrect) return;
 
-    if (inputValue === treasure.code) {
+    if (inputValue === room.code) {
       showSuccess();
     } else {
       setMessage('Código incorrecto. Inténtalo nuevamente.');
@@ -125,19 +99,18 @@ function TreasurePage({ treasureId }) {
   };
 
   const deleteDigit = () => {
-    if (isTransitioning) return;
     setInputValue((current) => current.slice(0, -1));
     setMessage('');
   };
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (!treasure || isCodeCorrect || isTransitioning) return;
+      if (!room || isCodeCorrect) return;
 
       if (/^[0-9]$/.test(event.key)) {
         event.preventDefault();
         setInputValue((current) =>
-          current.length < 6 ? `${current}${event.key}` : current
+          current.length < room.code.length ? `${current}${event.key}` : current
         );
         setMessage('');
         return;
@@ -150,10 +123,10 @@ function TreasurePage({ treasureId }) {
         return;
       }
 
-      if (event.key === 'Enter' && inputValue.length === 6) {
+      if (event.key === 'Enter' && inputValue.length === room.code.length) {
         event.preventDefault();
 
-        if (inputValue === treasure.code) {
+        if (inputValue === room.code) {
           showSuccess();
         } else {
           setMessage('Código incorrecto. Inténtalo nuevamente.');
@@ -163,36 +136,35 @@ function TreasurePage({ treasureId }) {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [inputValue, isCodeCorrect, isTransitioning, treasure]);
+  }, [inputValue, isCodeCorrect, room]);
 
-  if (!treasure) {
+  if (!room) {
     return <HomePage />;
   }
 
   return (
-    <main className="page-shell treasure-page">
+    <main className="page-shell room-page">
       <section className="game-panel">
         {!isCodeCorrect ? (
-          <div className={`challenge-content ${isTransitioning ? 'fade-out' : ''}`}>
+          <div className="challenge-content">
             <button className="back-button" type="button" onClick={() => goTo('/')}>
               ← Volver
             </button>
 
-            <div className="treasure-heading">
-              <div className="eyebrow">{treasure.title}</div>
-              <h1>Descubre el código</h1>
-            </div>
-
-            <div className="chest-stage">
+            <div className="door-stage">
               <img
-                src={`${process.env.PUBLIC_URL}/cofre.png`}
-                alt="Cofre del tesoro"
+                src={`${process.env.PUBLIC_URL}/lab-door-closed.png`}
+                alt="Puerta cerrada del laboratorio"
                 className="central-image"
               />
 
-              <div className="chest-controls">
-                <div className="code-display" aria-label="Código ingresado">
-                  {inputValue.padEnd(6, '•').split('').map((character, index) => (
+              <div className="door-controls">
+                <div
+                  className="code-display"
+                  aria-label="Código ingresado"
+                  style={{ '--code-length': room.code.length }}
+                >
+                  {inputValue.padEnd(room.code.length, '•').split('').map((character, index) => (
                     <span
                       key={index}
                       className={index < inputValue.length ? 'filled' : ''}
@@ -202,7 +174,23 @@ function TreasurePage({ treasureId }) {
                   ))}
                 </div>
 
-                <Keypad value={inputValue} onChange={setInputValue} />
+                {message && (
+                  <>
+                    <div className="wrong-feedback" aria-hidden="true">
+                      <img
+                        src={`${process.env.PUBLIC_URL}/gato_asustado.jpg`}
+                        alt=""
+                        className="wrong-cat-image"
+                      />
+                    </div>
+
+                    <div className="error-banner" role="alert">
+                      Código incorrecto
+                    </div>
+                  </>
+                )}
+
+                <Keypad value={inputValue} onChange={setInputValue} maxLength={room.code.length} />
               </div>
             </div>
 
@@ -211,7 +199,7 @@ function TreasurePage({ treasureId }) {
                 type="button"
                 className="secondary-button"
                 onClick={deleteDigit}
-                disabled={!inputValue || isTransitioning}
+                disabled={!inputValue}
               >
                 Borrar
               </button>
@@ -219,31 +207,34 @@ function TreasurePage({ treasureId }) {
                 type="button"
                 className="primary-button"
                 onClick={handleSubmit}
-                disabled={inputValue.length !== 6 || isTransitioning}
+                disabled={inputValue.length !== room.code.length}
               >
                 Enviar
               </button>
             </div>
 
-            {message && <p className="error-message">{message}</p>}
           </div>
         ) : (
           <div className="success-container">
-            <img
-              src={`${process.env.PUBLIC_URL}/gato-lingotes.webp`}
-              alt="Gato con el tesoro"
-              className="success-image"
-            />
+            <div className="door-stage success-door-stage">
+              <img
+                src={`${process.env.PUBLIC_URL}/lab-door-open.png`}
+                alt="Puerta abierta del laboratorio"
+                className="central-image"
+              />
+            </div>
 
-            <h1>¡Felicidades, has adivinado el código!</h1>
+            <div className="success-content">
+              <h1>Puedes pasar a la siguiente habitación.</h1>
 
-            <button
-              type="button"
-              className="primary-button home-button"
-              onClick={() => goTo('/')}
-            >
-              Volver al inicio
-            </button>
+              <button
+                type="button"
+                className="primary-button home-button"
+                onClick={() => goTo('/')}
+              >
+                Volver al inicio
+              </button>
+            </div>
           </div>
         )}
       </section>
@@ -252,10 +243,10 @@ function TreasurePage({ treasureId }) {
 }
 
 function App() {
-  const [treasureId, setTreasureId] = useState(() => getTreasureIdFromHash());
+  const [roomId, setRoomId] = useState(() => getRoomIdFromHash());
 
   useEffect(() => {
-    const syncRoute = () => setTreasureId(getTreasureIdFromHash());
+    const syncRoute = () => setRoomId(getRoomIdFromHash());
 
     if (!window.location.hash) {
       window.location.hash = '/';
@@ -270,14 +261,14 @@ function App() {
   return (
     <div className="App">
       <div
-        className="forest-background"
+        className="lab-background"
         style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.12)), url(${process.env.PUBLIC_URL}/fondo2.webp)`,
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0.22)), url(${process.env.PUBLIC_URL}/lab-background.png)`,
         }}
         aria-hidden="true"
       />
 
-      {treasureId ? <TreasurePage treasureId={treasureId} /> : <HomePage />}
+      {roomId ? <RoomPage roomId={roomId} /> : <HomePage />}
     </div>
   );
 }
