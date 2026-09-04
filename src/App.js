@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 
 const ROOMS = {
-  1: { title: 'Habitación 1', code: '325100' },
-  2: { title: 'Habitación 2', code: '123456' },
-  3: { title: 'Habitación 3', code: '567890' },
-  4: { title: 'Habitación 4', code: '901234' },
+  1: { title: '6°B', code: '2028' },
+  2: { title: '6°A', code: '362825' },
+  3: { title: '8°A', code: '1484729' },
+  4: { title: '8°B', code: '1234' },
 };
 
 const digits = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
@@ -24,9 +24,9 @@ function HomePage() {
     <main className="page-shell home-page">
       <section className="panel selection-panel">
         <div className="eyebrow">Laboratorio abandonado</div>
-        <h1>Elige una habitación</h1>
+        <h1>Elige tu habitación</h1>
         <p className="intro">
-          Selecciona una opción para abrir la puerta correspondiente.
+          Selecciona tu curso para abrir la puerta correspondiente.
         </p>
 
         <div className="room-options">
@@ -47,9 +47,9 @@ function HomePage() {
   );
 }
 
-function Keypad({ value, onChange }) {
+function Keypad({ value, onChange, maxLength }) {
   const addDigit = (digit) => {
-    if (value.length < 6) {
+    if (value.length < maxLength) {
       onChange(`${value}${digit}`);
     }
   };
@@ -76,34 +76,20 @@ function RoomPage({ roomId }) {
   const [inputValue, setInputValue] = useState('');
   const [message, setMessage] = useState('');
   const [isCodeCorrect, setIsCodeCorrect] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const transitionTimer = useRef(null);
 
   useEffect(() => {
     setInputValue('');
     setMessage('');
     setIsCodeCorrect(false);
-    setIsTransitioning(false);
-
-    return () => {
-      if (transitionTimer.current) {
-        clearTimeout(transitionTimer.current);
-      }
-    };
   }, [roomId]);
 
   const showSuccess = () => {
     setMessage('');
-    setIsTransitioning(true);
-
-    transitionTimer.current = setTimeout(() => {
-      setIsCodeCorrect(true);
-      setIsTransitioning(false);
-    }, 260);
+    setIsCodeCorrect(true);
   };
 
   const handleSubmit = () => {
-    if (!room || isCodeCorrect || isTransitioning) return;
+    if (!room || isCodeCorrect) return;
 
     if (inputValue === room.code) {
       showSuccess();
@@ -113,19 +99,18 @@ function RoomPage({ roomId }) {
   };
 
   const deleteDigit = () => {
-    if (isTransitioning) return;
     setInputValue((current) => current.slice(0, -1));
     setMessage('');
   };
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (!room || isCodeCorrect || isTransitioning) return;
+      if (!room || isCodeCorrect) return;
 
       if (/^[0-9]$/.test(event.key)) {
         event.preventDefault();
         setInputValue((current) =>
-          current.length < 6 ? `${current}${event.key}` : current
+          current.length < room.code.length ? `${current}${event.key}` : current
         );
         setMessage('');
         return;
@@ -138,7 +123,7 @@ function RoomPage({ roomId }) {
         return;
       }
 
-      if (event.key === 'Enter' && inputValue.length === 6) {
+      if (event.key === 'Enter' && inputValue.length === room.code.length) {
         event.preventDefault();
 
         if (inputValue === room.code) {
@@ -151,7 +136,7 @@ function RoomPage({ roomId }) {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [inputValue, isCodeCorrect, isTransitioning, room]);
+  }, [inputValue, isCodeCorrect, room]);
 
   if (!room) {
     return <HomePage />;
@@ -161,7 +146,7 @@ function RoomPage({ roomId }) {
     <main className="page-shell room-page">
       <section className="game-panel">
         {!isCodeCorrect ? (
-          <div className={`challenge-content ${isTransitioning ? 'fade-out' : ''}`}>
+          <div className="challenge-content">
             <button className="back-button" type="button" onClick={() => goTo('/')}>
               ← Volver
             </button>
@@ -174,8 +159,12 @@ function RoomPage({ roomId }) {
               />
 
               <div className="door-controls">
-                <div className="code-display" aria-label="Código ingresado">
-                  {inputValue.padEnd(6, '•').split('').map((character, index) => (
+                <div
+                  className="code-display"
+                  aria-label="Código ingresado"
+                  style={{ '--code-length': room.code.length }}
+                >
+                  {inputValue.padEnd(room.code.length, '•').split('').map((character, index) => (
                     <span
                       key={index}
                       className={index < inputValue.length ? 'filled' : ''}
@@ -185,16 +174,21 @@ function RoomPage({ roomId }) {
                   ))}
                 </div>
 
-                <Keypad value={inputValue} onChange={setInputValue} />
+                {message && (
+                  <div className="error-banner" role="alert">
+                    Código incorrecto
+                  </div>
+                )}
+
+                <Keypad value={inputValue} onChange={setInputValue} maxLength={room.code.length} />
               </div>
             </div>
-
             <div className="game-actions">
               <button
                 type="button"
                 className="secondary-button"
                 onClick={deleteDigit}
-                disabled={!inputValue || isTransitioning}
+                disabled={!inputValue}
               >
                 Borrar
               </button>
@@ -202,31 +196,34 @@ function RoomPage({ roomId }) {
                 type="button"
                 className="primary-button"
                 onClick={handleSubmit}
-                disabled={inputValue.length !== 6 || isTransitioning}
+                disabled={inputValue.length !== room.code.length}
               >
                 Enviar
               </button>
             </div>
 
-            {message && <p className="error-message">{message}</p>}
           </div>
         ) : (
           <div className="success-container">
-            <img
-              src={`${process.env.PUBLIC_URL}/lab-door-open.png`}
-              alt="Puerta abierta del laboratorio"
-              className="success-image"
-            />
+            <div className="door-stage success-door-stage">
+              <img
+                src={`${process.env.PUBLIC_URL}/lab-door-open.png`}
+                alt="Puerta abierta del laboratorio"
+                className="central-image"
+              />
+            </div>
 
-            <h1>Puedes pasar a la siguiente habitación.</h1>
+            <div className="success-content">
+              <h1>Puedes pasar a la siguiente habitación.</h1>
 
-            <button
-              type="button"
-              className="primary-button home-button"
-              onClick={() => goTo('/')}
-            >
-              Volver al inicio
-            </button>
+              <button
+                type="button"
+                className="primary-button home-button"
+                onClick={() => goTo('/')}
+              >
+                Volver al inicio
+              </button>
+            </div>
           </div>
         )}
       </section>
