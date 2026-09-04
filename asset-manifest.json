@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/act-pela/static/css/main.e791bd20.css",
-    "main.js": "/act-pela/static/js/main.ab66286c.js",
+    "main.css": "/act-pela/static/css/main.f7d4585f.css",
+    "main.js": "/act-pela/static/js/main.18fad88d.js",
     "static/js/453.bd1b257f.chunk.js": "/act-pela/static/js/453.bd1b257f.chunk.js",
     "index.html": "/act-pela/index.html",
-    "main.e791bd20.css.map": "/act-pela/static/css/main.e791bd20.css.map",
-    "main.ab66286c.js.map": "/act-pela/static/js/main.ab66286c.js.map",
+    "main.f7d4585f.css.map": "/act-pela/static/css/main.f7d4585f.css.map",
+    "main.18fad88d.js.map": "/act-pela/static/js/main.18fad88d.js.map",
     "453.bd1b257f.chunk.js.map": "/act-pela/static/js/453.bd1b257f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e791bd20.css",
-    "static/js/main.ab66286c.js"
+    "static/css/main.f7d4585f.css",
+    "static/js/main.18fad88d.js"
   ]
 }
