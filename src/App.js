@@ -175,14 +175,25 @@ function RoomPage({ roomId }) {
                 </div>
 
                 {message && (
-                  <div className="error-banner" role="alert">
-                    Código incorrecto
-                  </div>
+                  <>
+                    <div className="wrong-feedback" aria-hidden="true">
+                      <img
+                        src={`${process.env.PUBLIC_URL}/gato_asustado.jpg`}
+                        alt=""
+                        className="wrong-cat-image"
+                      />
+                    </div>
+
+                    <div className="error-banner" role="alert">
+                      Código incorrecto
+                    </div>
+                  </>
                 )}
 
                 <Keypad value={inputValue} onChange={setInputValue} maxLength={room.code.length} />
               </div>
             </div>
+
             <div className="game-actions">
               <button
                 type="button"
