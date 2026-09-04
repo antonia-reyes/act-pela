@@ -1,29 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
 
-const TREASURES = {
-  1: {
-    title: 'Tesoro 1',
-    code: '325100',
-  },
-  2: {
-    title: 'Tesoro 2',
-    code: '123456',
-  },
-  3: {
-    title: 'Tesoro 3',
-    code: '567890',
-  },
-  4: {
-    title: 'Tesoro 4',
-    code: '901234',
-  },
+const ROOMS = {
+  1: { title: 'Habitación 1', code: '325100' },
+  2: { title: 'Habitación 2', code: '123456' },
+  3: { title: 'Habitación 3', code: '567890' },
+  4: { title: 'Habitación 4', code: '901234' },
 };
 
 const digits = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
 
-function getTreasureIdFromHash() {
-  const match = window.location.hash.match(/^#\/treasure\/([1-4])$/);
+function getRoomIdFromHash() {
+  const match = window.location.hash.match(/^#\/room\/([1-4])$/);
   return match ? Number(match[1]) : null;
 }
 
@@ -35,22 +23,22 @@ function HomePage() {
   return (
     <main className="page-shell home-page">
       <section className="panel selection-panel">
-        <div className="eyebrow">Actividad</div>
-        <h1>Elige un tesoro</h1>
+        <div className="eyebrow">Laboratorio abandonado</div>
+        <h1>Elige una habitación</h1>
         <p className="intro">
-          Selecciona una opción para abrir el desafío correspondiente.
+          Selecciona una opción para abrir la puerta correspondiente.
         </p>
 
-        <div className="treasure-options">
-          {Object.entries(TREASURES).map(([id, treasure]) => (
+        <div className="room-options">
+          {Object.entries(ROOMS).map(([id, room]) => (
             <button
               key={id}
-              className="treasure-option"
+              className="room-option"
               type="button"
-              onClick={() => goTo(`/treasure/${id}`)}
+              onClick={() => goTo(`/room/${id}`)}
             >
-              <span className="treasure-number">{id}</span>
-              <span>{treasure.title}</span>
+              <span className="room-number">{id}</span>
+              <span>{room.title}</span>
             </button>
           ))}
         </div>
@@ -83,8 +71,8 @@ function Keypad({ value, onChange }) {
   );
 }
 
-function TreasurePage({ treasureId }) {
-  const treasure = TREASURES[treasureId];
+function RoomPage({ roomId }) {
+  const room = ROOMS[roomId];
   const [inputValue, setInputValue] = useState('');
   const [message, setMessage] = useState('');
   const [isCodeCorrect, setIsCodeCorrect] = useState(false);
@@ -102,7 +90,7 @@ function TreasurePage({ treasureId }) {
         clearTimeout(transitionTimer.current);
       }
     };
-  }, [treasureId]);
+  }, [roomId]);
 
   const showSuccess = () => {
     setMessage('');
@@ -115,9 +103,9 @@ function TreasurePage({ treasureId }) {
   };
 
   const handleSubmit = () => {
-    if (!treasure || isCodeCorrect || isTransitioning) return;
+    if (!room || isCodeCorrect || isTransitioning) return;
 
-    if (inputValue === treasure.code) {
+    if (inputValue === room.code) {
       showSuccess();
     } else {
       setMessage('Código incorrecto. Inténtalo nuevamente.');
@@ -132,7 +120,7 @@ function TreasurePage({ treasureId }) {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (!treasure || isCodeCorrect || isTransitioning) return;
+      if (!room || isCodeCorrect || isTransitioning) return;
 
       if (/^[0-9]$/.test(event.key)) {
         event.preventDefault();
@@ -153,7 +141,7 @@ function TreasurePage({ treasureId }) {
       if (event.key === 'Enter' && inputValue.length === 6) {
         event.preventDefault();
 
-        if (inputValue === treasure.code) {
+        if (inputValue === room.code) {
           showSuccess();
         } else {
           setMessage('Código incorrecto. Inténtalo nuevamente.');
@@ -163,14 +151,14 @@ function TreasurePage({ treasureId }) {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [inputValue, isCodeCorrect, isTransitioning, treasure]);
+  }, [inputValue, isCodeCorrect, isTransitioning, room]);
 
-  if (!treasure) {
+  if (!room) {
     return <HomePage />;
   }
 
   return (
-    <main className="page-shell treasure-page">
+    <main className="page-shell room-page">
       <section className="game-panel">
         {!isCodeCorrect ? (
           <div className={`challenge-content ${isTransitioning ? 'fade-out' : ''}`}>
@@ -178,19 +166,14 @@ function TreasurePage({ treasureId }) {
               ← Volver
             </button>
 
-            <div className="treasure-heading">
-              <div className="eyebrow">{treasure.title}</div>
-              <h1>Descubre el código</h1>
-            </div>
-
-            <div className="chest-stage">
+            <div className="door-stage">
               <img
-                src={`${process.env.PUBLIC_URL}/cofre.png`}
-                alt="Cofre del tesoro"
+                src={`${process.env.PUBLIC_URL}/lab-door-closed.png`}
+                alt="Puerta cerrada del laboratorio"
                 className="central-image"
               />
 
-              <div className="chest-controls">
+              <div className="door-controls">
                 <div className="code-display" aria-label="Código ingresado">
                   {inputValue.padEnd(6, '•').split('').map((character, index) => (
                     <span
@@ -230,12 +213,12 @@ function TreasurePage({ treasureId }) {
         ) : (
           <div className="success-container">
             <img
-              src={`${process.env.PUBLIC_URL}/gato-lingotes.webp`}
-              alt="Gato con el tesoro"
+              src={`${process.env.PUBLIC_URL}/lab-door-open.png`}
+              alt="Puerta abierta del laboratorio"
               className="success-image"
             />
 
-            <h1>¡Felicidades, has adivinado el código!</h1>
+            <h1>Puedes pasar a la siguiente habitación.</h1>
 
             <button
               type="button"
@@ -252,10 +235,10 @@ function TreasurePage({ treasureId }) {
 }
 
 function App() {
-  const [treasureId, setTreasureId] = useState(() => getTreasureIdFromHash());
+  const [roomId, setRoomId] = useState(() => getRoomIdFromHash());
 
   useEffect(() => {
-    const syncRoute = () => setTreasureId(getTreasureIdFromHash());
+    const syncRoute = () => setRoomId(getRoomIdFromHash());
 
     if (!window.location.hash) {
       window.location.hash = '/';
@@ -270,14 +253,14 @@ function App() {
   return (
     <div className="App">
       <div
-        className="forest-background"
+        className="lab-background"
         style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.12)), url(${process.env.PUBLIC_URL}/fondo2.webp)`,
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0.22)), url(${process.env.PUBLIC_URL}/lab-background.png)`,
         }}
         aria-hidden="true"
       />
 
-      {treasureId ? <TreasurePage treasureId={treasureId} /> : <HomePage />}
+      {roomId ? <RoomPage roomId={roomId} /> : <HomePage />}
     </div>
   );
 }
